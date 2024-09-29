@@ -1,0 +1,346 @@
+# mihomo 配置
+
+port: 7890
+socks-port: 7891
+redir-port: 7892
+tproxy-port: 7895
+mixed-port: 7893
+
+unified-delay: true
+geodata-mode: false
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
+tcp-concurrent: true
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+udp: true
+
+external-controller: 0.0.0.0:9090
+
+geox-url:
+  mmdb: "https://gitlab.com/Masaiki/GeoIP2-CN/-/raw/release/Country.mmdb"
+  asn: "https://gitlab.com/Loon0x00/loon_data/-/raw/main/geo/GeoLite2-ASN.mmdb"
+
+profile:
+  store-selected: true
+  store-fake-ip: false
+
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+
+  skip-domain:
+    - "Mijia Cloud"
+
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+    - any:53
+  auto-route: true
+  auto-detect-interface: true
+
+dns:
+  enable: true
+  listen: 0.0.0.0:7874
+  ipv6: false
+  enhanced-mode: redir-host
+  use-hosts: true
+  fake-ip-range: 28.0.0.1/8
+  fake-ip-filter:
+    - "*"
+    - +.lan
+  default-nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  nameserver-policy:
+    "*.qq.com,*.weixin.com,*.tencent.com": "https://doh.pub/dns-query"
+
+proxy-providers:
+  sub-group:
+    url: "https://connect.applecross.link/clash/1111896/hDNZIPaxAPb1"
+    type: http
+    interval: 86400
+    health-check: { enable: true, url: "http://cp.cloudflare.com", interval: 6 }
+    path: "./proxy-provider/sub-group.yaml"
+
+proxy-groups:
+  - {name: Apple News, type: select, proxies: [DIRECT, 🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Apple Store, type: select, proxies: [DIRECT, 🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Apple ID, type: select, proxies: [DIRECT, 🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Disney, type: select, proxies: [🇸🇬 SG, 🇭🇰 HK, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Netflix, type: select, proxies: [🇸🇬 SG, 🇭🇰 HK, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: YouTube, type: select, proxies: [🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: PayPal, type: select, proxies: [DIRECT, 🇺🇸 US, 🇭🇰 HK, 🇸🇬 SG, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Google, type: select, proxies: [🇺🇸 US, 🇭🇰 HK, 🇸🇬 SG, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: OneDrive, type: select, proxies: [DIRECT, 🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Microsoft, type: select, proxies: [DIRECT, 🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Sony, type: select, proxies: [DIRECT, 🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Telegram, type: select, proxies: [🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: TikTok, type: select, proxies: [🇺🇸 US, 🇭🇰 HK, 🇸🇬 SG, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Bahamut, type: select, proxies: [🇹🇼 TW, 🇭🇰 HK]}
+  - {name: Emby, type: select, proxies: [DIRECT, 🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: AI, type: select, proxies: [🇺🇸 US, 🇭🇰 HK, 🇸🇬 SG, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Cloudflare, type: select, proxies: [DIRECT, 🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global]}
+  - {name: Default, type: select, proxies: [🇭🇰 HK, 🇸🇬 SG, 🇺🇸 US, 🇹🇼 TW, 🇯🇵 JP, 🇰🇷 KR, 🇬🇧 UK, 🇫🇷 FR, 🇩🇪 DE, Other, Global, DIRECT]}
+  - {name: Overseas Download, type: select, use: [sub-group], filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'}
+  - {name: 🇭🇰 HK, type: select, use: [sub-group], filter: '^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)\b))).*$'}
+  - {name: 🇸🇬 SG, type: select, use: [sub-group], filter: '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b))).*$'}
+  - {name: 🇺🇸 US, type: select, use: [sub-group], filter: '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|United States)\b))).*$'}
+  - {name: 🇹🇼 TW, type: select, use: [sub-group], filter: '^(?=.*((?i)🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b))).*$'}
+  - {name: 🇯🇵 JP, type: select, use: [sub-group], filter: '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|Japan)\b))).*$'}
+  - {name: 🇰🇷 KR, type: select, use: [sub-group], filter: '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|Korea)\b))).*$'}
+  - {name: 🇬🇧 UK, type: select, use: [sub-group], filter: '^(?=.*((?i)🇬🇧|英国|伦敦|(\b(UK|United Kingdom)\b))).*$'}
+  - {name: 🇫🇷 FR, type: select, use: [sub-group], filter: '^(?=.*((?i)🇫🇷|法国|(\b(FR|France)\b))).*$'}
+  - {name: 🇩🇪 DE, type: select, use: [sub-group], filter: '^(?=.*((?i)🇩🇪|德国|(\b(DE|Germany)\b))).*$'}
+  - {name: Other, type: select, use: [sub-group], filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|🇭🇰|香港|🇹🇼|台湾|🇯🇵|日本|川日|东京|大阪|泉日|埼玉|🇰🇷|韩国|韓|首尔|🇸🇬|新加坡|狮|🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇬🇧|英国|伦敦|🇫🇷|法国|🇩🇪|德国|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|HK|Hong|TW|Tai|Taiwan|JP|Japan|KR|Korea|SG|Singapore|US|United States|UK|United Kingdom|R|France|FR|France|DE|Germany)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'}
+  - {name: Global, type: select, use: [sub-group], filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'}
+
+
+rule-providers:
+  Lan:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/Lan.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml'
+  Direct:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/Direct.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.yaml'
+  iCloudChina:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/iCloudChina.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/iCloudChina.yaml'
+  ApplePushNotificationService:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/ApplePushNotificationService.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/ApplePushNotificationService.yaml'
+  AppleSoftwareUpdates:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/AppleSoftwareUpdates.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AppleSoftwareUpdates.yaml'
+  AppleNews:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/Apple-News.yaml
+    url: 'https://raw.githubusercontent.com/Hackl0us/SS-Rule-Snippet/main/Rulesets/Clash/Basic/Apple-News.yaml'
+  AppleID:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/AppleID.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AppleID.yaml'
+  AppStore:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/AppStore.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AppStore.yaml'
+  ChinaDownloadCDN:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/ChinaDownloadCDN.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/ChinaDownloadCDN.yaml'
+  InternationalDownloadCDN:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/InternationalDownloadCDN.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/InternationalDownloadCDN.yaml'
+  AI:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/AI.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AI.yaml'
+  DouYin:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/DouYin.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/DouYin/DouYin.yaml'
+  TikTok:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/TikTok.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/TikTok.yaml'
+  Steam:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/Steam.yaml'
+    url: 'https://gitlab.com/lodepuly/proxy_tool_resources/-/raw/master/rule/Clash/Steam/Steam.yaml'
+  Game:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/Game.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/Game.yaml'
+  Disney:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/Disney.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.yaml'
+  Netflix:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/Netflix.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix_Classical.yaml'
+  YouTube:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/YouTube.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml'
+  Google:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/Google.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml'
+  Telegram:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/Telegram.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml'
+  PayPal:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/PayPal.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PayPal/PayPal.yaml'
+  Emby:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: './ruleset/Emby.yaml'
+    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/EmbyServer.yaml'
+  Sony:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/Sony.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Sony/Sony.yaml'
+  OneDrive:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/OneDrive.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OneDrive/OneDrive.yaml'
+  Microsoft:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/Microsoft.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml'
+  Bahamut:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/Bahamut.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.yaml'
+  Cloudflare:
+    type: http
+    behavior: classical
+    interval: 3600
+    proxy: DIRECT
+    path: ./ruleset/Cloudflare.yaml
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Cloudflare/Cloudflare.yaml'
+
+rules:
+  - IP-CIDR,66.94.0.0/19, Google
+  - IP-CIDR,206.29.177.36/32, Google
+  - IP-CIDR,208.54.0.0/16, Google
+  - DOMAIN-SUFFIX,t-mobile.com, Google
+  - DOMAIN-SUFFIX,pub.3gppnetwork.org, Google
+  - RULE-SET, Lan, DIRECT
+  - RULE-SET, Direct, DIRECT
+  - RULE-SET, ChinaDownloadCDN, DIRECT
+  - RULE-SET, InternationalDownloadCDN, Overseas Download
+  - RULE-SET, iCloudChina, DIRECT
+  - RULE-SET, ApplePushNotificationService, DIRECT
+  - RULE-SET, AppleSoftwareUpdates, DIRECT
+  - RULE-SET, AppleNews, Apple News
+  - RULE-SET, AppleID, Apple ID
+  - RULE-SET, AppStore, Apple Store
+  - RULE-SET, AI, AI
+  - RULE-SET, DouYin, DIRECT
+  - RULE-SET, TikTok, TikTok
+  - RULE-SET, Steam, Default
+  - RULE-SET, Game, Default
+  - RULE-SET, Disney, Disney
+  - RULE-SET, Netflix, Netflix
+  - RULE-SET, Bahamut, Bahamut
+  - RULE-SET, YouTube, YouTube
+  - RULE-SET, Google, Google
+  - RULE-SET, Telegram, Telegram
+  - RULE-SET, PayPal, PayPal
+  - RULE-SET, Emby, Emby
+  - RULE-SET, Sony, Sony
+  - RULE-SET, OneDrive, OneDrive
+  - RULE-SET, Microsoft, Microsoft
+  - RULE-SET, Cloudflare, Cloudflare
+  - GEOIP, CN, DIRECT
+  - MATCH, Default
